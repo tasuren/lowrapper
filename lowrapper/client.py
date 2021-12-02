@@ -1,6 +1,6 @@
 # lowrapper - Client
 
-from typing import Callable, Any, Union, Optional, overload
+from typing import Union, Optional
 from enum import Enum
 
 import requests
