@@ -1,3 +1,5 @@
 # lowrapper
 
-from .client import Methods, Method, NotImplemented, Client, Path
+from .client import (
+    Methods, Method, NotImplemented, Client, Path, CoroutineResponse, Response
+)

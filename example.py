@@ -1,11 +1,26 @@
-# lowrapper's example - The animechan API low wrapper
+# lowrapper's example - The animechan API low typed wrapper
 
-from lowrapper import Client, Path
+from typing import TypedDict
+
+from lowrapper import Method, Path, Client, Response
+
+
+class AnimeParams(TypedDict, total=False):
+    title: str
+
+
+class CharacterParams(TypedDict, total=False):
+    name: str
 
 
 class Quotes(Path):
-    anime: Path
-    character: Path
+    def anime(
+        self, method: Method, params: AnimeParams = {}, **kwargs
+    ) -> Response: ...
+
+    def character(
+        self, method: Method, params: CharacterParams = {}, **kwargs
+    ) -> Response: ...
 
 
 class Available(Path):
@@ -29,4 +44,4 @@ class AnimeChan(Client):
 
 if __name__ == "__main__":
     client = AnimeChan()
-    print(client.random("GET"))
+    print(client.random("GET").json())

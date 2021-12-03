@@ -1,4 +1,2 @@
-# Normal
 requests
-# Async
 aiohttp

@@ -1,9 +1,13 @@
 # lowrapper - Client
 
-from typing import Union, Optional
+from typing import TYPE_CHECKING, TypeVar, Coroutine, Any, Union, Optional
 from enum import Enum
 
+from aiohttp import ClientResponse
 import requests
+
+if TYPE_CHECKING:
+    from .aio import Client as AioClient
 
 
 class Methods(Enum):
@@ -17,6 +21,9 @@ class Methods(Enum):
     TRACE = 8
     PATCH = 9
 Method = Union[Methods, str]
+ClientT = TypeVar("ClientT", bound=Union["Client", "AioClient"])
+CoroutineResponse = Coroutine[Any, Any, ClientResponse]
+Response = Union[requests.Response, CoroutineResponse]
 
 
 class NotImplemented(Exception):
@@ -48,29 +55,32 @@ class Path:
     # http://api.my.web/v2/channels/114514/messages
     ```"""
 
-    def __init__(self, path: str = "", client: Optional["Client"] = None):
+    def __init__(self, path: str = "", client: ClientT = None):
         self.path, self.client = path, client
 
-    def __call__(self, method: Method, **kwargs) -> requests.Response:
+    def __call__(self, method: Method, **kwargs) -> Response:
         assert self.client is not None
         return self.client.request(self, method, **kwargs)
 
     def __getitem__(self, extra: str) -> "Path":
-        return self.__getattr__(extra)
+        return self.__getattribute__(extra)
 
-    def __getattr__(self, name: str) -> "Path":
-        self.path += f"{name}/"
-        return self
+    def __getattribute__(self, name: str) -> "Path":
+        if name in ("path", "client") or name.startswith("_"):
+            return super().__getattribute__(name)
+        else:
+            self.path += f"{name}/"
+            return self
 
     def __str__(self) -> str:
         return self.path
 
     def __repr__(self) -> str:
-        return f"<Path path={self.path} http={repr(self.http)}>"
+        return f"<Path path={self.path} http={repr(self.client)}>"
 
 
 class Client:
-    """This class is a client class for hitting the API. 
+    """This class is a base client class for hitting the API. 
     You can make requests using this class.  
     You can also extend this class and type it to make it easier to use the API on a text editor.
 
@@ -107,11 +117,12 @@ class Client:
     def _method(self, method):
         return method if isinstance(method, str) else method.name
 
-    def request(self, path: Path, method: Method, **kwargs) -> requests.Response:
+    def request(self, path: Path, method: Method, **kwargs) -> Response:
         """Do request.
 
         Parameters
         ----------
+        path : Path
         method : Method
         **kwargs : dict"""
         return requests.request(
