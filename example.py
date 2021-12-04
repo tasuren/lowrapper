@@ -2,46 +2,37 @@
 
 from typing import TypedDict
 
-from lowrapper import Method, Path, Client, Response
+from lowrapper import Method, Path, Client, request, Response
 
 
-class AnimeParams(TypedDict, total=False):
-    title: str
+BASE = "https://animechan.vercel.app/api/"
 
 
-class CharacterParams(TypedDict, total=False):
-    name: str
+class Quotes(Path[dict]):
+    def anime(self, title: str, **kwargs) -> dict:
+        kwargs["params"] = {"title": title}
+        return self.client.request(self, "GET", **kwargs)
 
-
-class Quotes(Path):
-    def anime(
-        self, method: Method, params: AnimeParams = {}, **kwargs
-    ) -> Response: ...
-
-    def character(
-        self, method: Method, params: CharacterParams = {}, **kwargs
-    ) -> Response: ...
+    def character(self, name: str, **kwargs):
+        kwargs["params"] = {"name": name}
+        return self.client.request(self, "GET", **kwargs)
 
 
 class Available(Path):
-    anime: Path
+    anime: Path[dict]
 
 
-class AnimeChan(Client):
+class AnimeChan(Client[dict]):
 
-    random: Path
+    random: Path[dict]
     quotes: Quotes
     available: Available
 
-    def __init__(self, base: str = "https://animechan.vercel.app/api/"):
-        self.base = base
-        super().__init__()
-
-    def adjustment(self, path: Path, **kwargs) -> dict:
-        kwargs["url"] = f"{kwargs.get('url') or self.base}{path.path}"
-        return kwargs
+    def request(self, path: Path, method: Method, **kwargs) -> dict:
+        kwargs["url"] = f"{kwargs.get('url') or BASE}{path.path}"
+        return request(method, **kwargs).json()
 
 
 if __name__ == "__main__":
     client = AnimeChan()
-    print(client.random("GET").json())
+    print(client.quotes.anime("keion"))
