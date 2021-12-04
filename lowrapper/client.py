@@ -73,7 +73,9 @@ class Client(Generic[ResponseT]):
         ...
 
     def __getattr__(self, name: str) -> Path[ResponseT]:
-        return Path(f"{name}/", self)
+        return (
+            self.__annotations__.get(name) or Path # type: ignore
+        )(f"{name}/", self)
 
     def __repr__(self) -> str:
         return "<HTTPClient>"

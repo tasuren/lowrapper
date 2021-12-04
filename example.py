@@ -13,13 +13,14 @@ class Quotes(Path[dict]):
         kwargs["params"] = {"title": title}
         return self.client.request(self, "GET", **kwargs)
 
-    def character(self, name: str, **kwargs):
+    def character(self, name: str, **kwargs) -> dict:
         kwargs["params"] = {"name": name}
         return self.client.request(self, "GET", **kwargs)
 
 
-class Available(Path):
-    anime: Path[dict]
+class Available(Path[dict]):
+    def anime(self, **kwargs) -> dict:
+        return self.client.request(self, "GET", **kwargs)
 
 
 class AnimeChan(Client[dict]):
@@ -35,4 +36,4 @@ class AnimeChan(Client[dict]):
 
 if __name__ == "__main__":
     client = AnimeChan()
-    print(client.quotes.anime("keion"))
+    print(client.quotes.character("Kino"))
