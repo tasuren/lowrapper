@@ -1,39 +1,52 @@
-# lowrapper's example - The animechan API low typed wrapper
+# lowrapper - Example of the Animechan API typed low wrapper.
 
-from typing import TypedDict
+from typing import TypedDict, Callable, Any, List
 
 from lowrapper import Method, Path, Client, request, Response
 
 
-BASE = "https://animechan.vercel.app/api/"
+class Quote(TypedDict):
+    "Data of anime quote."
+    anime: str
+    character: str
+    quote: str
 
 
-class Quotes(Path[dict]):
-    def anime(self, title: str, **kwargs) -> dict:
-        kwargs["params"] = {"title": title}
-        return self.client.request(self, "GET", **kwargs)
-
-    def character(self, name: str, **kwargs) -> dict:
-        kwargs["params"] = {"name": name}
-        return self.client.request(self, "GET", **kwargs)
+def _default(self, **kwargs):
+    return self.__request__(self, **kwargs)
 
 
-class Available(Path[dict]):
-    def anime(self, **kwargs) -> dict:
-        return self.client.request(self, "GET", **kwargs)
+class Quotes(Path):
+    def anime(self, title: str, page: int = 1, **kwargs) -> List[Quote]:
+        "Get quote by anime title."
+        kwargs["params"] = {"title": title, "page": page}
+        return _default(self, **kwargs)
+
+    def character(self, name: str, page: int = 1, **kwargs) -> List[Quote]:
+        "Get quote by anime character name."
+        kwargs["params"] = {"name": name, "page": page}
+        return _default(self, **kwargs)
 
 
-class AnimeChan(Client[dict]):
+class Available(Path):
+    anime: Path[List[str]]
 
-    random: Path[dict]
+
+class Animechan(Client):
+    "The Animechan API wrapper."
+
+    BASE = "https://animechan.vercel.app/api/"
+    random: Path[Quote]
     quotes: Quotes
     available: Available
 
-    def request(self, path: Path, method: Method, **kwargs) -> dict:
-        kwargs["url"] = f"{kwargs.get('url') or BASE}{path.path}"
-        return request(method, **kwargs).json()
+    def __request__(self, path: Path, **kwargs) -> Any:
+        kwargs["url"] = f"{kwargs.get('url') or self.BASE}{path.path}"
+        response = request(kwargs.pop("method", "GET"), **kwargs)
+        response.raise_for_status()
+        return response.json()
 
 
 if __name__ == "__main__":
-    client = AnimeChan()
+    client = Animechan()
     print(client.quotes.character("Kino"))
