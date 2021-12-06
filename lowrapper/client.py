@@ -1,7 +1,8 @@
 # lowrapper - Client
 
 from typing import (
-    Protocol, TypeVar, Generic, Callable, Type, NoReturn, Literal, Union, Any
+    overload, Protocol, TypeVar, Generic, Callable, Type, NoReturn,
+    Literal, Union, Any
 )
 
 from requests import Response, request
@@ -56,8 +57,9 @@ class PathGenerator(_PathGenerator["PathGenerator"]):
 
 
 ResponseT = TypeVar("ResponseT")
-class Path(_PathGenerator["Path"], Generic[ResponseT]):
-    def __init__(self, path: str, client: "Client"):
+ClientT = TypeVar("ClientT", bound="Client")
+class Path(_PathGenerator["Path[ResponseT]"], Generic[ResponseT]):
+    def __init__(self, path: str, client: ClientT):
         self.path, self.client = path, client
         self.__request__ = self.client.__request__
         self._locked = False
@@ -96,7 +98,10 @@ class Path(_PathGenerator["Path"], Generic[ResponseT]):
         finally:
             self._locked = False
 
-    def __getattr__(self, name: str) -> "Path":
+    def __getitem__(self, name: str) -> "Path[ResponseT]":
+        return super().__getitem__(name)
+
+    def __getattr__(self, name: str) -> "Path[ResponseT]":
         if self._locked:
             raise AttributeError(f"{self.__class__.__name__} has no attribute {name}.")
         else:
@@ -107,20 +112,29 @@ class Path(_PathGenerator["Path"], Generic[ResponseT]):
                 _trial_error(e, name)
 
 
-class _RequestNoMethod(Protocol):
-    def __call__(self, path: Path, *args, **kwargs) -> Any:
+class _BaseRequest(Protocol):
+    def __call__(
+        self, path: Any, method: Method, **kwargs
+    ) -> Any:
         ...
 
 
-class Client(Path[ResponseT], Generic[ResponseT]):
+class _Request(_BaseRequest):
+    def __call__(
+        self, path: Path[Response], method: Method, **kwargs
+    ) -> Union[Response, Any]:
+        ...
+
+
+class Client(Path[Response]):
     def __init__(self, path: str = ""):
         self.__default_path = path
         super().__init__(path, self)
 
-    __request__: Union[_RequestNoMethod, Callable[..., Any]]
+    __request__: Union[_Request, _BaseRequest]
     def __request__(self, path, method, **kwargs): # type: ignore
         return request(method, path.path, **kwargs)
 
-    def __getattr__(self, name: str) -> "Path":
+    def __getattr__(self, name: str):
         self.path = self.__default_path
         return super().__getattr__(name)

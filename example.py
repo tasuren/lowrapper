@@ -2,7 +2,8 @@
 
 from typing import TypedDict, Callable, Any, List
 
-from lowrapper import Method, Path, Client, request, Response
+from lowrapper import Method, Path, Client
+from requests import request, Response
 
 
 class Quote(TypedDict):
@@ -13,10 +14,10 @@ class Quote(TypedDict):
 
 
 def _default(self, **kwargs):
-    return self.__request__(self, **kwargs)
+    return self.__request__(self, kwargs.pop("method", "GET"), **kwargs)
 
 
-class Quotes(Path):
+class Quotes(Path[Response]):
     def anime(self, title: str, page: int = 1, **kwargs) -> List[Quote]:
         "Get quote by anime title."
         kwargs["params"] = {"title": title, "page": page}
@@ -28,7 +29,7 @@ class Quotes(Path):
         return _default(self, **kwargs)
 
 
-class Available(Path):
+class Available(Path[Response]):
     anime: Path[List[str]]
 
 
@@ -40,9 +41,9 @@ class Animechan(Client):
     quotes: Quotes
     available: Available
 
-    def __request__(self, path: Path, **kwargs) -> Any:
+    def __request__(self, path: Path, method: Method, **kwargs) -> Any:
         kwargs["url"] = f"{kwargs.get('url') or self.BASE}{path.path}"
-        response = request(kwargs.pop("method", "GET"), **kwargs)
+        response = request(method, **kwargs)
         response.raise_for_status()
         return response.json()
 
