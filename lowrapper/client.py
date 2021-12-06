@@ -119,22 +119,21 @@ class _BaseRequest(Protocol):
         ...
 
 
-class _Request(_BaseRequest):
-    def __call__(
-        self, path: Path[Response], method: Method, **kwargs
-    ) -> Union[Response, Any]:
-        ...
-
-
-class Client(Path[Response]):
+class Client(Path):
     def __init__(self, path: str = ""):
         self.__default_path = path
         super().__init__(path, self)
+
+    class _Request(_BaseRequest):
+        def __call__(
+            self, path: Path[ResponseT], method: Method, **kwargs
+        ) -> ResponseT:
+            ...
 
     __request__: Union[_Request, _BaseRequest]
     def __request__(self, path, method, **kwargs): # type: ignore
         return request(method, path.path, **kwargs)
 
-    def __getattr__(self, name: str):
+    def __getattr__(self, name: str) -> Path[ResponseT]:
         self.path = self.__default_path
         return super().__getattr__(name)

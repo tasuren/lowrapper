@@ -41,7 +41,7 @@ class Animechan(Client):
     quotes: Quotes
     available: Available
 
-    def __request__(self, path: Path, method: Method, **kwargs) -> Any:
+    def __request__(self, path: Path, method: Method, **kwargs) -> dict:
         kwargs["url"] = f"{kwargs.get('url') or self.BASE}{path.path}"
         response = request(method, **kwargs)
         response.raise_for_status()
