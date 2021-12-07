@@ -30,6 +30,9 @@ You can also change the arguments for the request.  (Let's see [FAQs](#FAQs))
 You can install lowrapper by running this command.  
 `pip install lowrapper`
 
+If you want asynchronous lowrapper, you can get this by running this command.  
+`pip install lowrapper[asynchronous]` or `pip install aiohttp`
+
 ## FAQs
 **Q: I want to hit an endpoint that changes dynamically.**  
 **A:** You can hit this by using like dictionary as follows.  

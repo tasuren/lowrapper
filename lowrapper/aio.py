@@ -1,12 +1,27 @@
+"""# Asynchronous version of lowrapper
+This module is an asynchronous version of `lowrapper`.  
+Usage does not change much.  
+`Client.__request__` returns a coroutine.  
+The library used for the request is `aiohttp`.
+
+Attributes
+----------
+CoroutineResponse : Type[Coroutine[Response, Any, Response]]
+    The type of coroutine returned by the `__request__` function.
+Response
+    `aiohttp.ClientResponse`
+request : Callable[[method, url, **kwargs], Coroutine]
+    This function makes a request using `aiohttp.ClientSession`."""
 # lowrapper - Aio Client
 
-from typing import overload, Generic, Coroutine, TypeVar, Callable, Any, Union
+from typing import Coroutine, Generic, TypeVar, Callable, Any, Union
 
 from aiohttp import ClientSession, ClientResponse as Response
 
 from .client import Client as SyncClient, Method, Path
 
 
+CoroutineResponse = Coroutine[Response, Any, Response]
 async def request(method: Method, url: str, **kwargs) -> Response:
     session = ClientSession(**kwargs.pop("client_session", {}))
     response = await session.request(method, url, **kwargs)
@@ -15,7 +30,7 @@ async def request(method: Method, url: str, **kwargs) -> Response:
 
 
 ClientResponseT = TypeVar(
-    "ClientResponseT", Coroutine[Response, Any, Response], Any
+    "ClientResponseT", bound=Union[Response, Any]
 )
 class Client(Path[ClientResponseT], Generic[ClientResponseT]):
     def __init__(self, path: str = ""):
@@ -27,7 +42,7 @@ class Client(Path[ClientResponseT], Generic[ClientResponseT]):
     ) -> ClientResponseT:
         if "url" not in kwargs:
             kwargs["url"] = path.path
-        return request(**kwargs)
+        return request(**kwargs) # type: ignore
 
     def __getattr__(self, name: str) -> Path[ClientResponseT]:
         return SyncClient.__getattr__(self, name, super()) # type: ignore
