@@ -28,7 +28,7 @@ setup(
     long_description_content_type="text/markdown",
     url=f'https://github.com/tasuren/{NAME}',
     project_urls={
-        "Documentation": f"https://tasuren.github.io/{NAME}"
+        "Documentation": f"https://tasuren.github.io/{NAME}/"
     },
     author=author,
     author_email='tasuren5@gmail.com',
