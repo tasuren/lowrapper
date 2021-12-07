@@ -66,7 +66,7 @@ client: Client[CoroutineResponse] = Client("https://asynchronous.love/")
 from lowrapper import Client, Path, Method, Response
 
 
-class MyClient(Client):
+class MyClient(Client[Response]):
 
     BASE = "https://simple.chat/"
 
