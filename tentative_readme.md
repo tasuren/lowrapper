@@ -9,9 +9,9 @@ This is the [weather forecast API's](https://weather.tsukumijima.net) low wrappe
 ```python
 # 天気予報 API the low level wrapper
 
-from lowrapper import Client
+from lowrapper import Client, Response
 
-client = Client("https://weather.tsukumijima.net/api/")
+client: Client[Response] = Client("https://weather.tsukumijima.net/api/")
 
 print(client.forecast("GET", params={"city": 120010}).json())
 # [GET] https://weather.tsukumijima.net/api/forecast?city=120010
@@ -31,15 +31,26 @@ This example uses the weather forecast API to get weather forecast information f
 **Q: I want to type the client class.**  
 **A:** You can type by inheriting the client class as follows:
 ```python
-class Endpoint(Path):
-    ping: Path[requests.Response]
+from lowrapper import Client, Path, Response
 
-class Client(lowrapper.Client):
+class Endpoint(Path[Response]):
+    ping: Path[Response]
+
+class MySomeAPIClient(Client[Response]):
     some: Endpoint
 
-client = Client("https://api.some.web/")
-print(client.some.ping("GET").text())
-# -> pong
+client = MySomeAPIClient("https://api.some.web/")
+print(client.some.ping("GET").text)
+# [GET] https://api.some.web/some/ping
+# -> Some's PONG!
+```
+
+**Q: I want to use asynchronous version of lowrapper.**
+**A:** You can use it by importing `lowrapper.aio` as follows.
+```python
+from lowrapper.aio import Client, Path, CoroutineResponse
+
+client: Client[CoroutineResponse] = Client("https://asynchronous.love/")
 ```
 
 ## Installation

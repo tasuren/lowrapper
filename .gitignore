@@ -2,3 +2,4 @@ __pycache__
 *.*-workspace
 .vscode
 .mypy_cache
+_*.py

@@ -73,7 +73,7 @@ class Path(_PathGenerator["Path[ResponseT]"], Generic[ResponseT]):
                 delattr(cls, name)
 
     class _Request(Protocol):
-        def __call__(self, method: Method, **kwargs) -> ResponseT:
+        def __call__(self, *args, **kwargs) -> ResponseT:
             ...
 
     __call__: Union[_Request, Callable[..., Union[ResponseT, Any]]]
@@ -113,27 +113,28 @@ class Path(_PathGenerator["Path[ResponseT]"], Generic[ResponseT]):
 
 
 class _BaseRequest(Protocol):
-    def __call__(
-        self, path: Any, method: Method, **kwargs
-    ) -> Any:
+    def __call__(self, path: Path, **kwargs) -> Any:
         ...
 
 
-class Client(Path):
+ClientResponseT = TypeVar("ClientResponseT", bound="Union[Response, Any]")
+class Client(Path[ClientResponseT], Generic[ClientResponseT]):
     def __init__(self, path: str = ""):
         self.__default_path = path
         super().__init__(path, self)
 
     class _Request(_BaseRequest):
-        def __call__(
-            self, path: Path[ResponseT], method: Method, **kwargs
-        ) -> ResponseT:
+        def __call__(self, path: Path[ClientResponseT], **kwargs) -> ClientResponseT:
             ...
 
-    __request__: Union[_Request, _BaseRequest]
-    def __request__(self, path, method, **kwargs): # type: ignore
-        return request(method, path.path, **kwargs)
+    __request__: Union[_Request, _BaseRequest, Callable[..., Any]]
+    def __request__(self, path, **kwargs): # type: ignore
+        if "url" not in kwargs:
+            kwargs["url"] = path.path
+        return request(**kwargs)
 
-    def __getattr__(self, name: str) -> Path[ResponseT]:
+    def __getattr__(
+        self, name: str, spr: Type[Path[ClientResponseT]] = None
+    ) -> Path[ClientResponseT]:
         self.path = self.__default_path
-        return super().__getattr__(name)
+        return (spr or super()).__getattr__(name) # type: ignore

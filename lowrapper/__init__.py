@@ -1,3 +1,3 @@
 # lowrapper
 
-from .client import Method, Client, Path, _BaseRequest
+from .client import Method, Client, Response, Path
