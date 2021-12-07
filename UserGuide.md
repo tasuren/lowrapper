@@ -8,8 +8,10 @@ print(client.random(method="GET").json())
 ```
 ### Explanation
 > `client = Client[Response]("https://animechan.vercel.app/api/")`
+
 Create an instance of the client class based on `https://animechan.vercel.app/api/`.
 > `print(client.random(method="GET").json())`
+
 Make a request by appending `random` to the base URL you specified earlier.  
 It then prints the returned JSON as a dictionary.
 
@@ -39,4 +41,8 @@ if __name__ == "__main__":
     print(client.random())
 ```
 
-## Make full typed wrapper
+## Make typed high level wrapper
+Let's create a typed, documented wrapper.  
+The way to do this is to create a client class that inherits from the `Client` class, and then provide the attribute functions in that class.  
+In the case of attributes, you can implement the attribute function in a class that inherits the `Path` class and annotate it.  
+For more information, see `examples/animechan.py` on GitHub.

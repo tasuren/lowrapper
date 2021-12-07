@@ -8,10 +8,7 @@ request
     `requests.request`"""
 # lowrapper - Client
 
-from typing import (
-    overload, Protocol, TypeVar, Generic, Callable, Type, NoReturn,
-    Literal, Union, Any
-)
+from typing import TypeVar, Generic, Callable, Type, NoReturn, Literal, Union, Any
 
 from requests import Response, request
 from inspect import isfunction
@@ -54,6 +51,10 @@ def _trial_error(e: TypeError, name: str) -> NoReturn:
         raise e
 
 
+def _raise_ate(self, name: str) -> NoReturn:
+    raise AttributeError(f"{self.__class__.__name__} has no attribute {name}.")
+
+
 PathT = TypeVar("PathT", bound="_PathGenerator")
 class _PathGenerator(Generic[PathT]):
 
@@ -78,7 +79,7 @@ class _PathGenerator(Generic[PathT]):
 
     def __getattr__(self, name: str) -> PathT:
         if name.startswith("_"):
-            raise AttributeError(name)
+            _raise_ate(self, name)
         else:
             self.path += f"{name}/"
             return self._get_class(name)(self.path)
@@ -157,12 +158,7 @@ class Path(_PathGenerator["Path[ResponseT]"], Generic[ResponseT]):
                 setattr(cls, f"__lowrapper_{name}__", obj)
                 delattr(cls, name)
 
-    class _Request(Protocol):
-        def __call__(self, *args, **kwargs) -> ResponseT:
-            ...
-
-    __call__: Union[_Request, Callable[..., Union[ResponseT, Any]]]
-    def __call__(self, *args, **kwargs): # type: ignore
+    def __call__(self, *args, **kwargs) -> ResponseT:
         """Call `__request__`.  
         If the last attribute accessed is callable by a function, the function is called."""
         self.__locked = True
@@ -190,18 +186,13 @@ class Path(_PathGenerator["Path[ResponseT]"], Generic[ResponseT]):
 
     def __getattr__(self, name: str) -> "Path[ResponseT]":
         if self.__locked or name.startswith("_"):
-            raise AttributeError(f"{self.__class__.__name__} has no attribute {name}.")
+            _raise_ate(self, name)
         else:
             self.path += f"{name}/"
             try:
                 return self._get_class(name)(self.path, self.client)
             except TypeError as e:
                 _trial_error(e, name)
-
-
-class _BaseRequest(Protocol):
-    def __call__(self, path: Path, **kwargs) -> Any:
-        ...
 
 
 ClientResponseT = TypeVar("ClientResponseT", bound=Union[Response, Any])
@@ -229,16 +220,13 @@ class Client(Path[ClientResponseT], Generic[ClientResponseT]):
     path : str
         Default path. (Base url)"""
 
+    __cls_name__ = "Path"
+
     def __init__(self, path: str):
         self.__default_path = path
         super().__init__(path, self)
 
-    class _Request(_BaseRequest):
-        def __call__(self, path: Path[ClientResponseT], **kwargs) -> ClientResponseT:
-            ...
-
-    __request__: Union[_Request, _BaseRequest, Callable[..., Any]]
-    def __request__(self, path, **kwargs): # type: ignore
+    def __request__(self, path: Union[Path[ClientResponseT], Any], **kwargs) -> Union[ClientResponseT, Any]:
         """This function is called when making a request.  
         By default, the `requests` library is used to make requests with the passed keyword arguments along with the path in the passed `Path` class.  
         You make a request when you call an instance of `Path`.  
@@ -260,10 +248,11 @@ class Client(Path[ClientResponseT], Generic[ClientResponseT]):
         For the asynchronous version of `Client`, this function returns a coroutine by default."""
         if "url" not in kwargs:
             kwargs["url"] = path.path
-        return request(**kwargs)
+        return request(**kwargs) # type: ignore
 
-    def __getattr__(
-        self, name: str, spr: Type[Path[ClientResponseT]] = None
-    ) -> Path[ClientResponseT]:
-        self.path = self.__default_path
-        return (spr or super()).__getattr__(name) # type: ignore
+    def __getattr__(self, name: str) -> Path[ClientResponseT]:
+        if name.startswith("_"):
+            _raise_ate(self, name)
+        else:
+            self.path = self.__default_path
+            return Path.__getattr__(self, name) # type: ignore

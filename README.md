@@ -1,3 +1,4 @@
+[![PyPI](https://img.shields.io/pypi/v/lowrapper)](https://pypi.org/project/lowrapper/) ![PyPI - Downloads](https://img.shields.io/pypi/dm/lowrapper) ![PyPI - License](https://img.shields.io/pypi/l/lowrapper) [![document](https://img.shields.io/badge/Documentation-passing-blue)](https://tasuren.github.io/lowrapper)
 # lowrapper
 The lowrapper is a library for quickly and easily creating an environment for tapping the API without implementation.  
 Typing the `Client` class creates a simple API wrapper with type completion.  
@@ -62,6 +63,7 @@ from lowrapper.aio import Client, Path, CoroutineResponse
 
 client: Client[CoroutineResponse] = Client("https://asynchronous.love/")
 ```
+And you should install `aiohttp` to request.
 
 **Q: I want to change the request args.**  
 **A:** You can change the request args like bellow.
@@ -94,4 +96,4 @@ Let's cooperate by making an issue and submitting a Pull Request!
 In case of Pull Request, please try not to change the style of the code. (65% PEP8)
 
 ## Documentation
-Comming soon...
+UserGuide and Documentation is [here](https://tasuren.github.io/lowrapper).

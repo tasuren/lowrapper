@@ -14,14 +14,14 @@ request : Callable[[method, url, **kwargs], Coroutine]
     This function makes a request using `aiohttp.ClientSession`."""
 # lowrapper - Aio Client
 
-from typing import Coroutine, Generic, TypeVar, Callable, Any, Union
+from typing import Coroutine, Generic, TypeVar, Any, Union
 
 from aiohttp import ClientSession, ClientResponse as Response
 
 from .client import Client as SyncClient, Method, Path
 
 
-CoroutineResponse = Coroutine[Response, Any, Response]
+CoroutineResponse = Coroutine[Any, Any, Response]
 async def request(method: Method, url: str, **kwargs) -> Response:
     session = ClientSession(**kwargs.pop("client_session", {}))
     response = await session.request(method, url, **kwargs)
@@ -45,4 +45,4 @@ class Client(Path[ClientResponseT], Generic[ClientResponseT]):
         return request(**kwargs) # type: ignore
 
     def __getattr__(self, name: str) -> Path[ClientResponseT]:
-        return SyncClient.__getattr__(self, name, super()) # type: ignore
+        return SyncClient.__getattr__(self, name) # type: ignore

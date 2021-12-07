@@ -1,9 +1,9 @@
 # lowrapper - Example of the Animechan API typed low wrapper.
 
-from typing import TypedDict, NewType, Callable, Any, List
+from typing import TypedDict, NewType, List
 
-from lowrapper import Method, Path, Client
-from requests import request, Response
+from lowrapper import Path, Client
+from requests import request
 
 
 AnimeTitle = NewType("AnimeTitle", str)
@@ -39,6 +39,9 @@ class Animechan(Client[dict]):
     random: Path[Quote]
     quotes: Quotes
     available: Available
+
+    def __init__(self):
+        super().__init__("")
 
     def __request__(self, path: Path[dict], **kwargs) -> dict:
         kwargs["url"] = f"{kwargs.get('url') or self.BASE}{path.path}"

@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>lowrapper.client API documentation</title>
+<meta name="description" content="Attributes
+Method : Union[Literal[&#34;GET&#34;, &#34;HEAD&#34;, &#34;POST&#34;, &#34;PUT&#34;, &#34;DELETE&#34;, &#34;CONNECT&#34;, &#34;OPTIONS&#34;, &#34;TRACE&#34;, &#34;PATCH&#34;], str]
+Type for request
+…" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>lowrapper.client</code></h1>
+</header>
+<section id="section-intro">
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>Method</code></strong> :&ensp;<code>Union[Literal["GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"], str]</code></dt>
+<dd>Type for request method.</dd>
+<dt><strong><code>Response</code></strong></dt>
+<dd><code>requests.Response</code></dd>
+<dt><strong><code>request</code></strong></dt>
+<dd><code>requests.request</code></dd>
+</dl>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Attributes
+----------
+Method : Union[Literal[&#34;GET&#34;, &#34;HEAD&#34;, &#34;POST&#34;, &#34;PUT&#34;, &#34;DELETE&#34;, &#34;CONNECT&#34;, &#34;OPTIONS&#34;, &#34;TRACE&#34;, &#34;PATCH&#34;], str]
+    Type for request method.
+Response
+    `requests.Response`
+request
+    `requests.request`&#34;&#34;&#34;
+# lowrapper - Client
+
+from typing import TypeVar, Generic, Callable, Type, NoReturn, Literal, Union, Any
+
+from requests import Response, request
+from inspect import isfunction
+
+
+Method = Union[Literal[
+    &#34;GET&#34;, &#34;HEAD&#34;, &#34;POST&#34;, &#34;PUT&#34;, &#34;DELETE&#34;, &#34;CONNECT&#34;, &#34;OPTIONS&#34;, &#34;TRACE&#34;, &#34;PATCH&#34;
+], str]
+
+
+NoRequestT = TypeVar(&#34;NoRequestT&#34;, bound=Callable[..., Any])
+def norequest(func: NoRequestT) -&gt; NoRequestT:
+    &#34;&#34;&#34;This is a decorator to indicate that the function is not prepared to make a request.
+
+    Examples
+    --------
+    ```python
+    class MyClient(Client):
+
+        # Mark prepare_data as not a request function.
+        @norequest
+        def prepare_data(self, message: Message) -&gt; dict:
+            \&#34;\&#34;\&#34;Prepare request base data.  
+            This function is not a request function.\&#34;\&#34;\&#34;
+            ...
+
+        def send(self, message: Message) -&gt; Response:
+            &#34;Send message&#34;
+            data = self.preapre_data(message)
+            return self.__request__(self, method=&#34;POST&#34;, data=data)
+    ```&#34;&#34;&#34;
+    func.__lowrapper_norequest__ = True # type: ignore
+    return func
+
+
+def _trial_error(e: TypeError, name: str) -&gt; NoReturn:
+    if any(word in str(e) for word in (&#34;takes&#34;, &#34;but&#34;, &#34;__init__()&#34;)):
+        raise TypeError(str(e).replace(&#34;__init__&#34;, name))
+    else:
+        raise e
+
+
+def _raise_ate(self, name: str) -&gt; NoReturn:
+    raise AttributeError(f&#34;{self.__class__.__name__} has no attribute {name}.&#34;)
+
+
+PathT = TypeVar(&#34;PathT&#34;, bound=&#34;_PathGenerator&#34;)
+class _PathGenerator(Generic[PathT]):
+
+    __cls_name__ = &#34;_PathGenerator&#34;
+
+    def __init__(self, path: str):
+        self.path = path
+
+    def _get_class(self, name: str) -&gt; Type[PathT]:
+        if name in getattr(self, &#34;__annotations__&#34;, {}):
+            return self.__annotations__[name]
+        return type(
+            &#34;PathSub&#34;, (globals()[self.__cls_name__],), {
+                name: getattr(self.__class__, name)
+                for name in dir(self.__class__)
+                if name.startswith(&#34;__lowrapper_&#34;)
+            }
+        )
+
+    def __getitem__(self, name: str) -&gt; PathT:
+        return self.__getattr__(name)
+
+    def __getattr__(self, name: str) -&gt; PathT:
+        if name.startswith(&#34;_&#34;):
+            _raise_ate(self, name)
+        else:
+            self.path += f&#34;{name}/&#34;
+            return self._get_class(name)(self.path)
+
+
+class PathGenerator(_PathGenerator[&#34;PathGenerator&#34;]):
+    &#34;&#34;&#34;Class for creating the API endpoint path.
+    When a nonexistent attribute is accessed, the name of the accessed attribute is added to the endpoint path.  
+    And returns this class.  
+    This class allows you to create an endpoint path without using a string.
+
+    Parameters
+    ----------
+    path : str
+        Default path.
+
+    Attributes
+    ----------
+    path : str
+        Configured path.
+
+    Examples
+    --------
+    ```python
+    from lowrapper import PathGenerator
+
+    path = PathGenerator(&#34;https://some.web.site/&#34;)
+    print(path.api.test.endpoint.path)
+    # https://some.web.site/api/test/endpoint/
+    ```
+
+    Notes
+    -----
+    If you want to create attributes that you don&#39;t want to include in the path, place an underscore at the beginning of the name.&#34;&#34;&#34;
+    __cls_name__ = &#34;PathGenerator&#34;
+
+
+ResponseT = TypeVar(&#34;ResponseT&#34;)
+ClientT = TypeVar(&#34;ClientT&#34;, bound=&#34;Client&#34;)
+class Path(_PathGenerator[&#34;Path[ResponseT]&#34;], Generic[ResponseT]):
+    &#34;&#34;&#34;Class returned when accessing some attribute of the `Client` or `Path` class.  
+    It inherits from `PathGenerator` and uses this class to construct the endpoint URL.  
+    It also returns an instance of the class specified in the annotation if the annotation is in a class with the name of the attribute accessed.  
+    The class to be specified for this annotation is the class that inherits from `Path` or `Path`.
+    
+    Parameters
+    ----------
+    path : str
+        First path.
+    client : Client
+        The client to push API.
+
+    Attributes
+    ----------
+    path : str
+        Configured endpoint path.
+    client : Client
+
+    Notes
+    -----
+    If you want to make endpoint path, you should use `PathGenerator`.  
+    If you want to create attributes that you don&#39;t want to include in the path, place an underscore at the beginning of the name.&#34;&#34;&#34;
+
+    __cls_name__ = &#34;Path&#34;
+
+    def __init__(self, path: str, client: ClientT):
+        self.path, self.client = path, client
+        self.__request__ = self.client.__request__
+        self.__locked = False
+
+    def __init_subclass__(cls):
+        super().__init_subclass__()
+        for name in dir(cls):
+            if (not name.startswith(&#34;_&#34;) and isfunction(obj := getattr(cls, name))
+                    and not hasattr(obj, &#34;__lowrapper_norequest__&#34;)):
+                setattr(cls, f&#34;__lowrapper_{name}__&#34;, obj)
+                delattr(cls, name)
+
+    def __call__(self, *args, **kwargs) -&gt; ResponseT:
+        &#34;&#34;&#34;Call `__request__`.  
+        If the last attribute accessed is callable by a function, the function is called.&#34;&#34;&#34;
+        self.__locked = True
+        try:
+            if hasattr(
+                self, name:=&#34;&#34;.join((
+                    &#34;__lowrapper_&#34;,
+                    self.path[:-1][self.path[:-1].rfind(&#34;/&#34;)+1:],
+                    &#34;__&#34;
+                ))
+            ):
+                return getattr(self, name)(*args, **kwargs)
+            return self.__request__(self, *args, **kwargs)
+        except Exception as e:
+            if isinstance(e, TypeError):
+                _trial_error(e, name)
+            else:
+                self.__locked = False
+                raise e
+        finally:
+            self.__locked = False
+
+    def __getitem__(self, name: str) -&gt; &#34;Path[ResponseT]&#34;:
+        return super().__getitem__(name)
+
+    def __getattr__(self, name: str) -&gt; &#34;Path[ResponseT]&#34;:
+        if self.__locked or name.startswith(&#34;_&#34;):
+            _raise_ate(self, name)
+        else:
+            self.path += f&#34;{name}/&#34;
+            try:
+                return self._get_class(name)(self.path, self.client)
+            except TypeError as e:
+                _trial_error(e, name)
+
+
+ClientResponseT = TypeVar(&#34;ClientResponseT&#34;, bound=Union[Response, Any])
+class Client(Path[ClientResponseT], Generic[ClientResponseT]):
+    &#34;&#34;&#34;This is a client class for tapping the API, which extends the `Path` class.  
+    So it works like `Path`.  
+    Also, if you are using mypy, you need to specify the return value when hitting the API as follows:
+    ```python
+    from lowrapper import Client, Response
+
+    client: Client[Response] = Client(BASE_URL)
+    # or
+    client = Client[Response](BASE_URL)
+    ```
+    (`# type: ignore` to ignore.)  
+    This is to ensure that type completion works well when you override a request function and have the return value automatically made into a dictionary, or when you use another library for the request.  
+    It also allows type completion of the return value when hitting the API.  
+    When you access an attribute of this class as follows, the name of the attribute is automatically appended to the path of the requesting endpoint.  
+    You can then make a request by calling that attribute.  
+    The attribute can be undefined.  
+    attribute returns `Path`.
+
+    Parameters
+    ----------
+    path : str
+        Default path. (Base url)&#34;&#34;&#34;
+
+    __cls_name__ = &#34;Path&#34;
+
+    def __init__(self, path: str):
+        self.__default_path = path
+        super().__init__(path, self)
+
+    def __request__(self, path: Union[Path[ClientResponseT], Any], **kwargs) -&gt; Union[ClientResponseT, Any]:
+        &#34;&#34;&#34;This function is called when making a request.  
+        By default, the `requests` library is used to make requests with the passed keyword arguments along with the path in the passed `Path` class.  
+        You make a request when you call an instance of `Path`.  
+        You can override this function to make the return value different.  
+        For example, if all the data in the API response is JSON, adding `.json () `to each request can be tedious, so you can override this function and return JSON as a dictionary.  
+        If you are using the asynchronous `Client` class, `aiohttp` will be used in the request.
+
+        Parameters
+        ----------
+        self : Client
+        path : Union[Path, Client]
+            `Path` class used to create the requested path.  
+            Get the requested path from this class from the `path` attribute.  
+            If the access is from an attribute of the `Client` class, the `Client` class is passed instead of the `Path` class.  
+            But you don&#39;t have to worry about it.
+
+        Notes
+        -----
+        For the asynchronous version of `Client`, this function returns a coroutine by default.&#34;&#34;&#34;
+        if &#34;url&#34; not in kwargs:
+            kwargs[&#34;url&#34;] = path.path
+        return request(**kwargs) # type: ignore
+
+    def __getattr__(self, name: str) -&gt; Path[ClientResponseT]:
+        if name.startswith(&#34;_&#34;):
+            _raise_ate(self, name)
+        else:
+            self.path = self.__default_path
+            return Path.__getattr__(self, name) # type: ignore</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="lowrapper.client.norequest"><code class="name flex">
+<span>def <span class="ident">norequest</span></span>(<span>func: ~NoRequestT) ‑> ~NoRequestT</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is a decorator to indicate that the function is not prepared to make a request.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python">class MyClient(Client):
+
+    # Mark prepare_data as not a request function.
+    @norequest
+    def prepare_data(self, message: Message) -&gt; dict:
+        &quot;&quot;&quot;Prepare request base data.  
+        This function is not a request function.&quot;&quot;&quot;
+        ...
+
+    def send(self, message: Message) -&gt; Response:
+        &quot;Send message&quot;
+        data = self.preapre_data(message)
+        return self.__request__(self, method=&quot;POST&quot;, data=data)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def norequest(func: NoRequestT) -&gt; NoRequestT:
+    &#34;&#34;&#34;This is a decorator to indicate that the function is not prepared to make a request.
+
+    Examples
+    --------
+    ```python
+    class MyClient(Client):
+
+        # Mark prepare_data as not a request function.
+        @norequest
+        def prepare_data(self, message: Message) -&gt; dict:
+            \&#34;\&#34;\&#34;Prepare request base data.  
+            This function is not a request function.\&#34;\&#34;\&#34;
+            ...
+
+        def send(self, message: Message) -&gt; Response:
+            &#34;Send message&#34;
+            data = self.preapre_data(message)
+            return self.__request__(self, method=&#34;POST&#34;, data=data)
+    ```&#34;&#34;&#34;
+    func.__lowrapper_norequest__ = True # type: ignore
+    return func</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="lowrapper.client.Client"><code class="flex name class">
+<span>class <span class="ident">Client</span></span>
+<span>(</span><span>path: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This is a client class for tapping the API, which extends the <code><a title="lowrapper.client.Path" href="#lowrapper.client.Path">Path</a></code> class.<br>
+So it works like <code><a title="lowrapper.client.Path" href="#lowrapper.client.Path">Path</a></code>.<br>
+Also, if you are using mypy, you need to specify the return value when hitting the API as follows:</p>
+<pre><code class="language-python">from lowrapper import Client, Response
+
+client: Client[Response] = Client(BASE_URL)
+# or
+client = Client[Response](BASE_URL)
+</code></pre>
+<p>(<code># type: ignore</code> to ignore.)<br>
+This is to ensure that type completion works well when you override a request function and have the return value automatically made into a dictionary, or when you use another library for the request.<br>
+It also allows type completion of the return value when hitting the API.<br>
+When you access an attribute of this class as follows, the name of the attribute is automatically appended to the path of the requesting endpoint.<br>
+You can then make a request by calling that attribute.<br>
+The attribute can be undefined.<br>
+attribute returns <code><a title="lowrapper.client.Path" href="#lowrapper.client.Path">Path</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Default path. (Base url)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Client(Path[ClientResponseT], Generic[ClientResponseT]):
+    &#34;&#34;&#34;This is a client class for tapping the API, which extends the `Path` class.  
+    So it works like `Path`.  
+    Also, if you are using mypy, you need to specify the return value when hitting the API as follows:
+    ```python
+    from lowrapper import Client, Response
+
+    client: Client[Response] = Client(BASE_URL)
+    # or
+    client = Client[Response](BASE_URL)
+    ```
+    (`# type: ignore` to ignore.)  
+    This is to ensure that type completion works well when you override a request function and have the return value automatically made into a dictionary, or when you use another library for the request.  
+    It also allows type completion of the return value when hitting the API.  
+    When you access an attribute of this class as follows, the name of the attribute is automatically appended to the path of the requesting endpoint.  
+    You can then make a request by calling that attribute.  
+    The attribute can be undefined.  
+    attribute returns `Path`.
+
+    Parameters
+    ----------
+    path : str
+        Default path. (Base url)&#34;&#34;&#34;
+
+    __cls_name__ = &#34;Path&#34;
+
+    def __init__(self, path: str):
+        self.__default_path = path
+        super().__init__(path, self)
+
+    def __request__(self, path: Union[Path[ClientResponseT], Any], **kwargs) -&gt; Union[ClientResponseT, Any]:
+        &#34;&#34;&#34;This function is called when making a request.  
+        By default, the `requests` library is used to make requests with the passed keyword arguments along with the path in the passed `Path` class.  
+        You make a request when you call an instance of `Path`.  
+        You can override this function to make the return value different.  
+        For example, if all the data in the API response is JSON, adding `.json () `to each request can be tedious, so you can override this function and return JSON as a dictionary.  
+        If you are using the asynchronous `Client` class, `aiohttp` will be used in the request.
+
+        Parameters
+        ----------
+        self : Client
+        path : Union[Path, Client]
+            `Path` class used to create the requested path.  
+            Get the requested path from this class from the `path` attribute.  
+            If the access is from an attribute of the `Client` class, the `Client` class is passed instead of the `Path` class.  
+            But you don&#39;t have to worry about it.
+
+        Notes
+        -----
+        For the asynchronous version of `Client`, this function returns a coroutine by default.&#34;&#34;&#34;
+        if &#34;url&#34; not in kwargs:
+            kwargs[&#34;url&#34;] = path.path
+        return request(**kwargs) # type: ignore
+
+    def __getattr__(self, name: str) -&gt; Path[ClientResponseT]:
+        if name.startswith(&#34;_&#34;):
+            _raise_ate(self, name)
+        else:
+            self.path = self.__default_path
+            return Path.__getattr__(self, name) # type: ignore</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="lowrapper.client.Path" href="#lowrapper.client.Path">Path</a></li>
+<li>lowrapper.client._PathGenerator</li>
+<li>typing.Generic</li>
+</ul>
+</dd>
+<dt id="lowrapper.client.Path"><code class="flex name class">
+<span>class <span class="ident">Path</span></span>
+<span>(</span><span>path: str, client: ~ClientT)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class returned when accessing some attribute of the <code><a title="lowrapper.client.Client" href="#lowrapper.client.Client">Client</a></code> or <code><a title="lowrapper.client.Path" href="#lowrapper.client.Path">Path</a></code> class.<br>
+It inherits from <code><a title="lowrapper.client.PathGenerator" href="#lowrapper.client.PathGenerator">PathGenerator</a></code> and uses this class to construct the endpoint URL.<br>
+It also returns an instance of the class specified in the annotation if the annotation is in a class with the name of the attribute accessed.<br>
+The class to be specified for this annotation is the class that inherits from <code><a title="lowrapper.client.Path" href="#lowrapper.client.Path">Path</a></code> or <code><a title="lowrapper.client.Path" href="#lowrapper.client.Path">Path</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
+<dd>First path.</dd>
+<dt><strong><code>client</code></strong> :&ensp;<code><a title="lowrapper.client.Client" href="#lowrapper.client.Client">Client</a></code></dt>
+<dd>The client to push API.</dd>
+</dl>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Configured endpoint path.</dd>
+<dt><strong><code>client</code></strong> :&ensp;<code><a title="lowrapper.client.Client" href="#lowrapper.client.Client">Client</a></code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>If you want to make endpoint path, you should use <code><a title="lowrapper.client.PathGenerator" href="#lowrapper.client.PathGenerator">PathGenerator</a></code>.<br>
+If you want to create attributes that you don't want to include in the path, place an underscore at the beginning of the name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Path(_PathGenerator[&#34;Path[ResponseT]&#34;], Generic[ResponseT]):
+    &#34;&#34;&#34;Class returned when accessing some attribute of the `Client` or `Path` class.  
+    It inherits from `PathGenerator` and uses this class to construct the endpoint URL.  
+    It also returns an instance of the class specified in the annotation if the annotation is in a class with the name of the attribute accessed.  
+    The class to be specified for this annotation is the class that inherits from `Path` or `Path`.
+    
+    Parameters
+    ----------
+    path : str
+        First path.
+    client : Client
+        The client to push API.
+
+    Attributes
+    ----------
+    path : str
+        Configured endpoint path.
+    client : Client
+
+    Notes
+    -----
+    If you want to make endpoint path, you should use `PathGenerator`.  
+    If you want to create attributes that you don&#39;t want to include in the path, place an underscore at the beginning of the name.&#34;&#34;&#34;
+
+    __cls_name__ = &#34;Path&#34;
+
+    def __init__(self, path: str, client: ClientT):
+        self.path, self.client = path, client
+        self.__request__ = self.client.__request__
+        self.__locked = False
+
+    def __init_subclass__(cls):
+        super().__init_subclass__()
+        for name in dir(cls):
+            if (not name.startswith(&#34;_&#34;) and isfunction(obj := getattr(cls, name))
+                    and not hasattr(obj, &#34;__lowrapper_norequest__&#34;)):
+                setattr(cls, f&#34;__lowrapper_{name}__&#34;, obj)
+                delattr(cls, name)
+
+    def __call__(self, *args, **kwargs) -&gt; ResponseT:
+        &#34;&#34;&#34;Call `__request__`.  
+        If the last attribute accessed is callable by a function, the function is called.&#34;&#34;&#34;
+        self.__locked = True
+        try:
+            if hasattr(
+                self, name:=&#34;&#34;.join((
+                    &#34;__lowrapper_&#34;,
+                    self.path[:-1][self.path[:-1].rfind(&#34;/&#34;)+1:],
+                    &#34;__&#34;
+                ))
+            ):
+                return getattr(self, name)(*args, **kwargs)
+            return self.__request__(self, *args, **kwargs)
+        except Exception as e:
+            if isinstance(e, TypeError):
+                _trial_error(e, name)
+            else:
+                self.__locked = False
+                raise e
+        finally:
+            self.__locked = False
+
+    def __getitem__(self, name: str) -&gt; &#34;Path[ResponseT]&#34;:
+        return super().__getitem__(name)
+
+    def __getattr__(self, name: str) -&gt; &#34;Path[ResponseT]&#34;:
+        if self.__locked or name.startswith(&#34;_&#34;):
+            _raise_ate(self, name)
+        else:
+            self.path += f&#34;{name}/&#34;
+            try:
+                return self._get_class(name)(self.path, self.client)
+            except TypeError as e:
+                _trial_error(e, name)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>lowrapper.client._PathGenerator</li>
+<li>typing.Generic</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="lowrapper.aio.Client" href="aio.html#lowrapper.aio.Client">Client</a></li>
+<li><a title="lowrapper.client.Client" href="#lowrapper.client.Client">Client</a></li>
+</ul>
+</dd>
+<dt id="lowrapper.client.PathGenerator"><code class="flex name class">
+<span>class <span class="ident">PathGenerator</span></span>
+<span>(</span><span>path: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class for creating the API endpoint path.
+When a nonexistent attribute is accessed, the name of the accessed attribute is added to the endpoint path.<br>
+And returns this class.<br>
+This class allows you to create an endpoint path without using a string.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Default path.</dd>
+</dl>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Configured path.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-python">from lowrapper import PathGenerator
+
+path = PathGenerator(&quot;https://some.web.site/&quot;)
+print(path.api.test.endpoint.path)
+# https://some.web.site/api/test/endpoint/
+</code></pre>
+<h2 id="notes">Notes</h2>
+<p>If you want to create attributes that you don't want to include in the path, place an underscore at the beginning of the name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PathGenerator(_PathGenerator[&#34;PathGenerator&#34;]):
+    &#34;&#34;&#34;Class for creating the API endpoint path.
+    When a nonexistent attribute is accessed, the name of the accessed attribute is added to the endpoint path.  
+    And returns this class.  
+    This class allows you to create an endpoint path without using a string.
+
+    Parameters
+    ----------
+    path : str
+        Default path.
+
+    Attributes
+    ----------
+    path : str
+        Configured path.
+
+    Examples
+    --------
+    ```python
+    from lowrapper import PathGenerator
+
+    path = PathGenerator(&#34;https://some.web.site/&#34;)
+    print(path.api.test.endpoint.path)
+    # https://some.web.site/api/test/endpoint/
+    ```
+
+    Notes
+    -----
+    If you want to create attributes that you don&#39;t want to include in the path, place an underscore at the beginning of the name.&#34;&#34;&#34;
+    __cls_name__ = &#34;PathGenerator&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>lowrapper.client._PathGenerator</li>
+<li>typing.Generic</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#attributes">Attributes</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="lowrapper" href="index.html">lowrapper</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="lowrapper.client.norequest" href="#lowrapper.client.norequest">norequest</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="lowrapper.client.Client" href="#lowrapper.client.Client">Client</a></code></h4>
+</li>
+<li>
+<h4><code><a title="lowrapper.client.Path" href="#lowrapper.client.Path">Path</a></code></h4>
+</li>
+<li>
+<h4><code><a title="lowrapper.client.PathGenerator" href="#lowrapper.client.PathGenerator">PathGenerator</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

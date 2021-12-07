@@ -3,3 +3,7 @@ __pycache__
 .vscode
 .mypy_cache
 _*.py
+.DS_Store
+build
+*.egg-info
+dist

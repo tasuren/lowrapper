@@ -7,7 +7,7 @@ from os.path import exists
 NAME = "lowrapper"
 
 
-if exists("READMD.md"):
+if exists("README.md"):
     with open("README.md", "r") as f:
         long_description = f.read()
 else:
