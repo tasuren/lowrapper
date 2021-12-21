@@ -79,7 +79,7 @@ class MyClient(Client[Response]):
         super().__init__(self.BASE)
 
     def send(self, message: str) -> Response:
-        return self.__request__(self, json={"content": message})
+        return self.__request__(self, method="POST", json={"content": message})
 
 
 client = MyClient()
