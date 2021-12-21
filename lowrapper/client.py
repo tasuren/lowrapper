@@ -218,7 +218,28 @@ class Client(Path[ClientResponseT], Generic[ClientResponseT]):
     Parameters
     ----------
     path : str
-        Default path. (Base url)"""
+        Default path. (Base url)
+
+    ## `__request__` method
+    This function is called when making a request.  
+    By default, the `requests` library is used to make requests with the passed keyword arguments along with the path in the passed `Path` class.  
+    You make a request when you call an instance of `Path`.  
+    You can override this function to make the return value different.  
+    For example, if all the data in the API response is JSON, adding `.json () `to each request can be tedious, so you can override this function and return JSON as a dictionary.  
+    If you are using the asynchronous `Client` class, `aiohttp` will be used in the request.
+
+    Parameters
+    ----------
+    self : Client
+    path : Union[Path, Client]
+        `Path` class used to create the requested path.  
+        Get the requested path from this class from the `path` attribute.  
+        If the access is from an attribute of the `Client` class, the `Client` class is passed instead of the `Path` class.  
+        But you don't have to worry about it.
+
+    Notes
+    -----
+    For the asynchronous version of `Client`, this function returns a coroutine by default."""
 
     __cls_name__ = "Path"
 
@@ -227,25 +248,6 @@ class Client(Path[ClientResponseT], Generic[ClientResponseT]):
         super().__init__(path, self)
 
     def __request__(self, path: Union[Path[ClientResponseT], Any], **kwargs) -> Union[ClientResponseT, Any]:
-        """This function is called when making a request.  
-        By default, the `requests` library is used to make requests with the passed keyword arguments along with the path in the passed `Path` class.  
-        You make a request when you call an instance of `Path`.  
-        You can override this function to make the return value different.  
-        For example, if all the data in the API response is JSON, adding `.json () `to each request can be tedious, so you can override this function and return JSON as a dictionary.  
-        If you are using the asynchronous `Client` class, `aiohttp` will be used in the request.
-
-        Parameters
-        ----------
-        self : Client
-        path : Union[Path, Client]
-            `Path` class used to create the requested path.  
-            Get the requested path from this class from the `path` attribute.  
-            If the access is from an attribute of the `Client` class, the `Client` class is passed instead of the `Path` class.  
-            But you don't have to worry about it.
-
-        Notes
-        -----
-        For the asynchronous version of `Client`, this function returns a coroutine by default."""
         if "url" not in kwargs:
             kwargs["url"] = path.path
         return request(**kwargs) # type: ignore
