@@ -1,4 +1,4 @@
-[![PyPI](https://img.shields.io/pypi/v/lowrapper)](https://pypi.org/project/lowrapper/) ![PyPI - Downloads](https://img.shields.io/pypi/dm/lowrapper) ![PyPI - License](https://img.shields.io/pypi/l/lowrapper) [![document](https://img.shields.io/badge/Documentation-passing-blue)](https://tasuren.github.io/lowrapper/)
+[![PyPI](https://img.shields.io/pypi/v/lowrapper)](https://pypi.org/project/lowrapper/) ![PyPI - Downloads](https://img.shields.io/pypi/dm/lowrapper) ![PyPI - License](https://img.shields.io/pypi/l/lowrapper) [![document](https://img.shields.io/badge/Documentation-passing-blue)](https://tasuren.github.io/lowrapper/) [![Discord](https://img.shields.io/discord/777430548951728149?label=chat&logo=discord)](https://discord.gg/kfMwZUyGFG)
 # lowrapper
 The lowrapper is a library for quickly and easily creating an environment for tapping the API without implementation.  
 Typing the `Client` class creates a simple API wrapper with type completion.  
